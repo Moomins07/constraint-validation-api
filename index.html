@@ -138,6 +138,7 @@
         <div class="overflow-x-hidden">
           <table
             class="w-full mt-6 divide-y hidden md:table dark:border-gray-800 light:border-black"
+            id="book-table"
           >
             <thead class="text-lg mb-2">
               <tr>
@@ -236,18 +237,5 @@
         </div>
       </div>
     </div>
-    <script>
-      document
-        .getElementById('add-book')
-        .addEventListener('click', function (event) {
-          event.preventDefault(); // prevents the form from being submitted
-
-          const title = document.getElementById('title').value;
-          const author = document.getElementById('author').value;
-
-          const bookList = document.getElementById('book-list');
-          bookList.innerHTML += `<p>${title} by ${author}</p>`;
-        });
-    </script>
   </body>
 </html>
