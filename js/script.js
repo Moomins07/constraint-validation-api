@@ -12,6 +12,13 @@ class Library {
     console.log(`Adding ${book} to "myLibrary" array`);
   }
 
+  removeBook(id) {
+    const index = this._myLibrary.findIndex((book) => book.id === id);
+    if (index !== -1) {
+      this._myLibrary.splice(index, 1);
+    }
+  }
+
   // Added this function to App class so items in array are displayed on load
   loadItems() {
     this._myLibrary.forEach((book) => this._displayNewBook(book));
@@ -39,7 +46,8 @@ class Library {
     </td>
     <td class="flex justify-end py-6">
       <button
-        class="uppercase tracking-wider text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out"
+        id="remove-book"
+        class="uppercase tracking-wider text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out delete"
       >
         Remove
       </button>
@@ -79,6 +87,21 @@ class App {
     document
       .getElementById('add-book')
       .addEventListener('submit', this._newBook.bind(this));
+    document
+      .getElementById('book-table')
+      .addEventListener('click', this._removeBook.bind(this));
+  }
+
+  _removeBook(e) {
+    if (e.target.classList.contains('delete')) {
+      {
+        if (confirm('Are you sure?')) {
+          const id = e.target.closest('.border-b').getAttribute('data-id');
+          this._myLibrary.removeBook(id);
+          e.target.closest('.border-b').remove();
+        }
+      }
+    }
   }
 
   _newBook(e) {
