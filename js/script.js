@@ -28,20 +28,21 @@ class Library {
 
   // Function to display the newly added book in the DOM
   _displayNewBook(book) {
+    // Desktop element
     const booksEl = document.getElementById('book-table');
 
     const bookEl = document.createElement('tr');
     bookEl.classList.add('border-b');
     bookEl.setAttribute('data-id', book.id);
     bookEl.innerHTML = `
-    <tr class="border-b">
+    
     <td class="py-6">${book.name}</td>
     <td>${book.author}</td>
     <td>
       <button
-        class="uppercase tracking-wider text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out hover:scale-105"
+        class="uppercase tracking-wider text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out hover:scale-105 read-btn"
       >
-        Yes
+        yes
       </button>
     </td>
     <td class="flex justify-end py-6">
@@ -52,10 +53,42 @@ class Library {
         Remove
       </button>
     </td>
-  </tr>
+  
   `;
 
     booksEl.appendChild(bookEl);
+
+    // Mobile elements
+
+    const booksElMobile = document.getElementById('mobile');
+
+    const bookElMobile = document.createElement('div');
+    bookElMobile.classList.add(
+      'border',
+      'rounded',
+      'p-4',
+      'mb-2',
+      'space-y-2',
+      'flex',
+      'flex-col',
+      'sm:items-center',
+      'text-left',
+      'mt-6',
+      'mobile-div'
+    );
+    bookElMobile.setAttribute('data-id', book.id);
+    bookElMobile.innerHTML = `
+    <div><span class="font-bold">Name: </span>${book.name}</div>
+    <div><span class="font-bold">Author: </span>${book.author}</div>
+    <div><span class="font-bold">Read: </span><button class='read-btn uppercase tracking-wider text-sm border px-3 py-0 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out w-fit sm:px-12'>yes</button></div>
+    <button
+      class="uppercase tracking-wider text-sm border px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out w-fit sm:px-12 delete"
+    >
+      Remove
+    </button>
+    `;
+
+    booksElMobile.appendChild(bookElMobile);
   }
 }
 
@@ -90,15 +123,30 @@ class App {
     document
       .getElementById('book-table')
       .addEventListener('click', this._removeBook.bind(this));
+    document
+      .getElementById('mobile')
+      .addEventListener('click', this._removeBook.bind(this));
+
+    document
+      .getElementById('mobile')
+      .addEventListener('click', this._checkIfRead.bind(this));
+    document
+      .getElementById('book-table')
+      .addEventListener('click', this._checkIfRead.bind(this));
   }
 
   _removeBook(e) {
     if (e.target.classList.contains('delete')) {
       {
         if (confirm('Are you sure?')) {
-          const id = e.target.closest('.border-b').getAttribute('data-id');
-          this._myLibrary.removeBook(id);
-          e.target.closest('.border-b').remove();
+          const id = e.target
+            .closest('.border-b, .mobile-div')
+            .getAttribute('data-id');
+          this._bookLibrary.removeBook(id);
+          const elementsToRemove = document.querySelectorAll(
+            `[data-id="${id}"]`
+          );
+          elementsToRemove.forEach((el) => el.remove());
         }
       }
     }
@@ -120,6 +168,17 @@ class App {
     bookTitle.value = '';
     authorName.value = '';
     console.log(this._bookLibrary._myLibrary);
+  }
+
+  _checkIfRead(e) {
+    if (e.target.classList.contains('read-btn')) {
+      console.log('clicked');
+      if (e.target.textContent.trim() == 'yes') {
+        e.target.textContent = 'no';
+      } else {
+        e.target.textContent = 'yes';
+      }
+    }
   }
 
   _toggleMode() {
@@ -175,12 +234,5 @@ class App {
     }
   }
 }
-
-// addBookBtn.addEventListener('click', function (event) {
-//   event.preventDefault();
-//   bookTitleInput = bookTitle.value;
-//   addBookToLibrary(bookTitleInput);
-//   console.log(myLibrary);
-// });
 
 const app = new App();
