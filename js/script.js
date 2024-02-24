@@ -19,7 +19,7 @@ function addBookToLibrary(e) {
     alert('Please fill in all fields!')
   } else {
     const book = new Book(bookTitle.value, bookAuthor.value)
-    book.read = true;
+    book.read = false;
     myLibrary.push(book)
     loadBooks()
   }
