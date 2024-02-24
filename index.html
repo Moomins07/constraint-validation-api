@@ -135,7 +135,7 @@
             class="absolute left-7 bottom-3 text-red text-sm italic"
           ></div> -->
         </form>
-        <div class="overflow-x-hidden">
+        <div class="overflow-y-hidden">
           <table
             class="w-full mt-6 divide-y hidden md:table dark:border-gray-800 light:border-black"
             id="book-table"
@@ -165,76 +165,11 @@
             </thead>
             <tbody>
               <!-- Example row -->
-              <tr class="border-b">
-                <td class="py-6">Lord of the Rings</td>
-                <td>Tolkien</td>
-                <td>
-                  <button
-                    class="uppercase tracking-wider text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out hover:scale-105"
-                  >
-                    Yes
-                  </button>
-                </td>
-                <td class="flex justify-end py-6">
-                  <button
-                    class="uppercase tracking-wider text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out delete"
-                  >
-                    Remove
-                  </button>
-                </td>
-              </tr>
-              <!-- Add more rows as needed -->
-              <tr class="border-b">
-                <td class="py-6">Cyberpunk 2077</td>
-                <td>CD Project Red</td>
-                <td>
-                  <button
-                    class="uppercase tracking-wider text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out hover:scale-105"
-                  >
-                    No
-                  </button>
-                </td>
-                <td class="flex justify-end py-6">
-                  <button
-                    id="remove-book"
-                    class="uppercase tracking-wider text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out delete"
-                  >
-                    Remove
-                  </button>
-                </td>
-              </tr>
             </tbody>
           </table>
 
           <!-- Mobile table -->
-          <div class="md:hidden block" id="mobile">
-            <div
-              class="border rounded p-4 mb-2 space-y-2 flex flex-col sm:items-center text-left mt-6"
-            >
-              <!-- this div represents a row -->
-              <div><span class="font-bold">Name: </span>Lord of the Rings</div>
-              <div><span class="font-bold">Author: </span>Tolkien</div>
-              <div><span class="font-bold">Read: </span>Yes</div>
-              <button
-                class="uppercase tracking-wider text-sm border px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out w-fit sm:px-12"
-              >
-                Remove
-              </button>
-            </div>
-            <div
-              class="border rounded p-4 mb-2 space-y-2 flex flex-col sm:items-center text-left mt-6"
-            >
-              <!-- this div represents a row -->
-              <div><span class="font-bold">Name: </span>Cyberpunk 2077</div>
-              <div><span class="font-bold">Author: </span>CD Project Red</div>
-              <div><span class="font-bold">Read: </span>No</div>
-              <button
-                class="uppercase tracking-wider text-sm border px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out w-fit sm:px-12"
-              >
-                Remove
-              </button>
-            </div>
-          </div>
+          <div class="md:hidden block" id="mobile"></div>
         </div>
       </div>
     </div>
