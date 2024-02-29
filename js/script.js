@@ -69,7 +69,7 @@ function displayNewBooks(book) {
       <button
         class="uppercase tracking-wider text-sm border border-white px-4 py-2 rounded hover:bg-white hover:text-black hover:border-black transform transition duration-250 ease-in-out hover:scale-105 read-btn" style="min-width: 60px";
       >
-        yes
+        read
       </button>
     </td>
     <td class="flex justify-end py-6">
