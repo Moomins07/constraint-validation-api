@@ -95,6 +95,7 @@
           action=""
           id="link-form"
           class="relative flex flex-col w-full py-10 mt-20 space-y-4 bg-darkViolet rounded-lg md:flex-row md:space-y-0 md:space-x-3"
+          novalidate
         >
           <div class="flex flex-col md:w-1/2 space-y-1">
             <label for="title" class="font-bold text-lead tracking-wide"
@@ -105,6 +106,7 @@
               class="dark:text-black p-3 border-2 rounded-lg placeholder-slate-200s focus:outline-none border-slate-600 dark:border-none"
               placeholder="Book title"
               id="title"
+              required
             />
           </div>
 
@@ -117,11 +119,13 @@
               class="dark:text-black p-3 border-2 rounded-lg placeholder-slate-200s focus:outline-none border-slate-600 dark:border-none"
               placeholder="Author"
               id="author"
+              required
             />
           </div>
 
           <button
             id="add-book"
+            type="submit"
             class="flex flex-row justify-center rounded-md self-end bg-slate-600 md:rounded-full px-3 py-1.5 w-full md:w-1/12 dark:bg-slate-500 transition hover:dark:bg-slate-400 group hover:bg-slate-500"
           >
             <i
@@ -135,6 +139,13 @@
             class="absolute left-7 bottom-3 text-red text-sm italic"
           ></div> -->
         </form>
+
+        <div
+          id="error-message"
+          class="text-3xl hidden"
+          style="color: rgb(212, 48, 48)"
+        ></div>
+
         <div class="overflow-y-hidden">
           <table
             class="w-full mt-6 divide-y hidden md:table dark:border-gray-800 light:border-black"

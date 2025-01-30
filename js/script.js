@@ -1,4 +1,4 @@
-// Library class to handle library data and private 'state'
+// Library class to handle library data and public methods
 class Library {
   constructor() {
     this.myLibrary = []
@@ -123,6 +123,27 @@ class App {
     document.addEventListener('DOMContentLoaded', this.init.bind(this))
   }
 
+  _checkFormValidity() {
+    const { title, author } = this._getBookElements()
+    const error = document.getElementById('error-message')
+
+
+
+    if (!title.checkValidity() || !author.checkValidity()) {
+      title.style.border = '2px solid red'
+      author.style.border = '2px solid red'
+      error.textContent = "Expecting both fields to be filled!"
+      error.classList.remove('hidden')
+    } else {
+      title.style.border = '2px solid green'
+      author.style.border = '2px solid green'
+      error.textContent = ''
+      error.classList.add('hidden')
+
+    }
+  }
+
+
   _defaultBooks() {
     const lotrBook = new Book('Lord of the Rings', 'Tolkien')
     const cyberpunkBook = new Book('Cyberpunk 2077', 'CD Project Red')
@@ -145,13 +166,22 @@ class App {
     }
   }
 
+  _getBookElements() {
+    return {
+      title: document.getElementById('title'),
+      author: document.getElementById('author')
+    };
+  } // created this so I can re-use these two elements without needing to repeat the code in other function scopes.
+
   _addBookToLibrary(e) {
-    const bookTitle = document.getElementById('title')
-    const bookAuthor = document.getElementById('author')
+    const { title: bookTitle, author: bookAuthor } = this._getBookElements();
     e.preventDefault()
+    console.log('Submitting...')
+
+
 
     if (bookTitle.value === '' || bookAuthor.value === '') {
-      alert('Please fill in all fields!')
+      // alert('Please fill in all fields!')
     } else {
       const book = new Book(bookTitle.value, bookAuthor.value)
       // book.read = false;
@@ -159,14 +189,25 @@ class App {
       bookTitle.value = '';
       bookAuthor.value = '';
       this._library.loadBooks()
+      bookTitle.style.border = 'none'
+      bookAuthor.style.border = 'none'
     }
   }
 
 
   _setEventListeners() {
-    document.getElementById('add-book').addEventListener('click', this._addBookToLibrary.bind(this))
+    document.getElementById('link-form').addEventListener('submit', (e) => {
+      e.preventDefault(); // Prevents form from actually submitting
+      this._checkFormValidity();
+      this._addBookToLibrary(e);
+
+    });
     document.getElementById('book-table').addEventListener('click', this._checkIfReadOrRemove.bind(this))
     document.getElementById('mobile').addEventListener('click', this._checkIfReadOrRemove.bind(this))
+    // document.getElementById('link-form').addEventListener('keypress', this._checkFormValidityOnKeyPress.bind(this))
+    document.getElementById('link-form').addEventListener('input', () => {
+      this._checkFormValidity(); // Validate as user types
+    });
   }
 
 
