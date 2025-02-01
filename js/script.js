@@ -27,33 +27,53 @@ function getErrorMessage(field) {
     return ''
 }
 
-function addErrorElement(errorText, input) {
-    const currentEl = document.activeElement.parentElement
-    const parent = input.querySelector('.parent')
+// function addErrorElement(errorText) {
+//     const currentEl = document.activeElement.parentElement
+//     const parent = document.querySelector('.parent')
+//     const errorSpan = currentEl.querySelector('.error-message')
 
-    const span = document.createElement('span')
-    span.className = '.error-message'
-    span.textContent = errorText
 
-    if (!parent.querySelector('.error-message')) {
-        currentEl.appendChild(span)
-    }
-}
+
+//     const span = document.createElement('span')
+//     span.className = 'error-message'
+//     span.textContent = errorText
+
+
+
+//     if (getErrorMessage && !errorSpan) {
+//         currentEl.appendChild(span)
+//         console.log(currentEl.lastElementChild)
+//     } else if (!getErrorMessage && errorSpan) {
+//         errorSpan.textContent = ''
+//     }
+
+// }
 
 
 function validateField(input) {
 
-
-    console.log(getErrorMessage(input))
-
     let errorMessage = getErrorMessage(input)
 
+    const span = document.createElement('span')
+    const currentEl = document.activeElement.parentElement
+    const errorSpan = currentEl.querySelector('.error-message')
+
     if (errorMessage) {
+        console.log(errorMessage)
+        span.className = 'error-message'
+        span.textContent = errorMessage
         input.style.border = '2px solid red'
-        addErrorElement(errorMessage)
+        if (!errorSpan) {
+            currentEl.appendChild(span)
+        }
     } else {
-        errorMessage.textContent = ''
+        console.log(errorMessage)
         input.style.border = '2px solid green'
+        if (errorSpan) {
+            errorSpan.remove()
+        }
+
+        // span.textContent = errorMessage
     }
 }
 
