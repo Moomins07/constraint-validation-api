@@ -27,27 +27,6 @@ function getErrorMessage(field) {
     return ''
 }
 
-// function addErrorElement(errorText) {
-//     const currentEl = document.activeElement.parentElement
-//     const parent = document.querySelector('.parent')
-//     const errorSpan = currentEl.querySelector('.error-message')
-
-
-
-//     const span = document.createElement('span')
-//     span.className = 'error-message'
-//     span.textContent = errorText
-
-
-
-//     if (getErrorMessage && !errorSpan) {
-//         currentEl.appendChild(span)
-//         console.log(currentEl.lastElementChild)
-//     } else if (!getErrorMessage && errorSpan) {
-//         errorSpan.textContent = ''
-//     }
-
-// }
 
 
 function validateField(input) {
@@ -65,16 +44,26 @@ function validateField(input) {
         input.style.border = '2px solid red'
         if (!errorSpan) {
             currentEl.appendChild(span)
+        } else {
+            errorSpan.textContent = errorMessage
         }
     } else {
         console.log(errorMessage)
         input.style.border = '2px solid green'
         if (errorSpan) {
-            errorSpan.remove()
+            errorSpan.textContent = ''
         }
-
-        // span.textContent = errorMessage
     }
+}
+
+function validatePasswords(input) {
+    const password = document.getElementById('password')
+    const confirmPassword = document.getElementById('confirm-password')
+
+    if (document.activeElement.id === 'password') {
+        console.log('password is active element')
+    }
+
 }
 
 
