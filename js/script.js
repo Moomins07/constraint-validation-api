@@ -6,6 +6,7 @@
 
 
 const formInputs = document.querySelectorAll('input');
+const submitBtn = document.getElementById('add-book')
 
 function getErrorMessage(field) {
     if (field.validity.valueMissing) {
@@ -22,6 +23,8 @@ function getErrorMessage(field) {
     }
     if (field.validity.patternMismatch) {
         return "Invalid format.";
+    } if (passwordsDoNotMatch(field)) {
+        return "Passwords do not match"
     }
 
     return ''
@@ -33,41 +36,105 @@ function validateField(input) {
 
     let errorMessage = getErrorMessage(input)
 
-    const span = document.createElement('span')
-    const currentEl = document.activeElement.parentElement
-    const errorSpan = currentEl.querySelector('.error-message')
+    const currentEl = input.parentElement
+    let errorSpan = currentEl.querySelector('.error-message')
+
 
     if (errorMessage) {
-        console.log(errorMessage)
-        span.className = 'error-message'
-        span.textContent = errorMessage
+
         input.style.border = '2px solid red'
+        input.classList.add('has-error')
+        input.classList.remove('no-error')
         if (!errorSpan) {
-            currentEl.appendChild(span)
+            errorSpan = document.createElement('span')
+            errorSpan.className = 'error-message'
+            errorSpan.textContent = errorMessage
+            currentEl.appendChild(errorSpan)
+            // currentEl.appendChild(errorSpan);
         } else {
             errorSpan.textContent = errorMessage
         }
     } else {
-        console.log(errorMessage)
         input.style.border = '2px solid green'
+        input.classList.remove('has-error')
+        input.classList.add('no-error')
         if (errorSpan) {
-            errorSpan.textContent = ''
+            errorSpan.textContent = '';
+
         }
     }
 }
 
-function validatePasswords(input) {
+function passwordsDoNotMatch(input) {
     const password = document.getElementById('password')
     const confirmPassword = document.getElementById('confirm-password')
 
-    if (document.activeElement.id === 'password') {
-        console.log('password is active element')
+    if (input.id === 'password' || input.id === 'confirm-password') {
+
+        if (password.value == confirmPassword.value || confirmPassword.value == password.value) {
+            password.style.border = '2px solid green'
+            confirmPassword.style.border = '2px solid green'
+            password.nextElementSibling.textContent = ''
+            confirmPassword.nextElementSibling.textContent = ''
+        }
+
+        if (password.value !== confirmPassword.value) {
+            return true
+        }
     }
 
 }
 
+function displayModal() {
 
-formInputs.forEach((input) => {
+    const modalContainer = document.getElementById("modal-container");
 
-    input.addEventListener('input', () => validateField(input));
-})
+    modalContainer.innerHTML = ""; // Clear previous content
+
+    // const modal = document.createElement("div");
+    modalContainer.innerHTML = `
+  <div class="fixed inset-0 flex items-center justify-center">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-80 text-center">
+      <h2 class="text-xl font-semibold">Form submitted successfully!</h2>
+      <button class="mt-4 px-4 py-2 bg-blue-500 text-white rounded-lg" onclick="closeModal()">
+        Close
+      </button>
+    </div>
+  </div>
+`;
+
+    modalContainer.appendChild(modal);
+
+}
+
+function checkIfSubmittedSuccessfully() {
+    const allValid = [...formInputs].every(input => input.classList.contains('no-error'));
+    if (allValid) {
+        displayModal()
+    }
+}
+
+function closeModal() {
+    document.getElementById("modal-container").innerHTML = "";
+}
+
+function eventListeners() {
+    formInputs.forEach((input) => {
+
+        input.addEventListener('input', () => validateField(input));
+    })
+
+    submitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        formInputs.forEach((input) => {
+            validateField(input);
+        });
+        checkIfSubmittedSuccessfully()
+
+    });
+
+}
+
+
+
+document.addEventListener('DOMContentLoaded', eventListeners)
